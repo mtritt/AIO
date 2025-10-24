@@ -1,28 +1,28 @@
 import streamlit as st 
 
-def levenshtein_distance(token_1 , token_2) : 
-    distances = [[0] * (len(token_2) + 1) for i in range(len(token_1) + 1)]
+# build levenshtenin distance 
+def levenshtein_distance(s , t) : 
+    n , m = len(s) , len(t) 
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
 
-    for i in range(len(token_1) + 1) : 
-        distances[i][0] = i 
-    for j in range(len(token_2) + 1) : 
-        distances[0][j] = j 
-    
+    for i in range(n + 1) : 
+        dp[i][0] = i 
+    for j in range(m + 1) : 
+        dp[0][j] = j 
+
     cost = 0 
-    
-    for i in range(1 , len(token_2) + 1) :
-        for j in range(1 , len(token_1) + 1) : 
-            if token_1[i - 1] == token_2[j - 1] : 
-                cost = 0 
-            else : 
-                cost = 1
-            distances[i][j] = min(
-                distances[i - 1][j] + 1 , # delete 
-                distances[i][j - 1] + 1, # insert 
-                distances[i - 1][j - 1] + cost # replace hoặc match 
-            ) 
-    return distances[len(token_1)][len(token_2)]
+    for i in range(1 , n + 1) :
+        for j in range(1 , m + 1) : 
+            if s[i - 1] == t[j - 1] : cost = 0 
+            else : cost = 1 
+            dp[i][j] = min(
+                dp[i - 1] + 1 , # xoá 
+                dp[i][j - 1] + 1 , # chèn 
+                dp[i - 1][j - 1] + cost # thay thế 
+        )
+    return dp[n][m]
 
+# read file 
 def load_vocab(file_path) : 
     with open(file_path , 'r') as file : 
         lines = file.readlines()
@@ -31,6 +31,7 @@ def load_vocab(file_path) :
 
 vocabs = load_vocab(file_path = '/Users/macos/AIO/module 1 /w4/T4/Solution/source/data/vocab.txt') 
 
+# build by streamlit 
 st.title('Word Correction')
 word = st.text_input('Enter your word :')
 
