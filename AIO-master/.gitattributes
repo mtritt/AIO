@@ -1,3 +1,0 @@
-*.csv filter=lfs diff=lfs merge=lfs -text
-module[[:space:]]3/w1/Thứ[[:space:]]5/code/COVID-19-Dataset/usa_county_wise.csv filter=lfs diff=lfs merge=lfs -text
-module[[:space:]]3/w1/Thứ[[:space:]]6/code/example3/creditcard.csv filter=lfs diff=lfs merge=lfs -text
