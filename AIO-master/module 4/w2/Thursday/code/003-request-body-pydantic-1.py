@@ -16,7 +16,7 @@ fake_db = [
 
 
 class User(BaseModel):
-    id: int | None = None
+    id: int | None = None # id là int hoặc là None 
     username: str
 
 
